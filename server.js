@@ -19,7 +19,7 @@ mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => console.log(err));
 
 
-//app.use(express.static(path.join(__dirname, '/frontend/ui/build')));
+app.use(express.static(path.join(__dirname, '/frontend/dist')));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
