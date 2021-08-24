@@ -1,0 +1,73 @@
+<template>
+    <div class="admin-energy-performance-container">
+        <AdminInputListForm 
+            heading="Energy Performance" 
+            :input_object="energy_performance_object"
+            :display_labels_object="display_labels_obj" />
+    </div>
+</template>
+
+<script>
+import AdminInputListForm from './AdminInputListForm.vue'
+
+export default {
+    name: 'AdminEnergyPerformance',
+    props: ['propertiesData', 'property_id'],
+    components: {
+        AdminInputListForm
+    },
+    data() {
+        return {
+            properties: undefined,
+            display_labels_obj: {
+                co2_current: 'CO2 current',
+                co2_potential: 'CO2 potential',
+                eef_current: 'EEF current',
+                eef_potential: 'EEF potential',
+                epc_certificate: 'EPC certificates',
+                epc_reference: 'EPC reference'
+            }
+        }
+    },
+    mounted() {
+        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+    },
+    updated() {
+        if (!this.properties && this.propertiesData) {
+            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+        }
+    },
+    computed: {
+        property() {
+            try { return this.properties.find(property => property.property_id === this.property_id) }
+            catch(e) { return undefined }
+        },
+        energy_performance_object() {
+            return this.property ? this.property.energy_performance : undefined
+        }
+    }
+}
+</script>
+
+<style>
+
+.admin-energy-performance-container {
+    width: 46%;
+}
+
+.admin-energy-performance-container {
+    width: 45%;
+    background-color: #ccc;
+    margin: 10px;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+</style>
+
+
+
+
