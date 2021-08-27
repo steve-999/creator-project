@@ -7,7 +7,7 @@
                 class="admin-media-photos__li"
             >
                 <div class="admin-media-single-photo-container">
-                    <AdminInputListForm 
+                    <InputListWithLabels 
                         :input_object="photo" 
                         :display_labels_object="photo_display_keys" />
                 </div>
@@ -16,29 +16,31 @@
 
         <div class="floorplans-container">
             <h3 class="floorplans__h3">Floorplans</h3>
-            <EmptyInputListForm :num_elements="4" />
+            <InputListForm :input_list="floorplans" />
         </div>
 
         <div class="photos360-container">
             <h3 class="photos360__h3">Photos 360</h3>
-            <EmptyInputListForm :num_elements="4" />
+            <InputListForm :input_list="photos360" />
         </div>
 
         <div class="tours-container">
             <h3 class="tours__h3">Tours</h3>
-            <EmptyInputListForm :num_elements="4" />
+            <InputListForm :input_list="tours" />
         </div>
 
         <div class="videos-container">
             <h3 class="videos__h3">Videos</h3>
-            <EmptyInputListForm :num_elements="4" />
+            <InputListForm :input_list="videos" />
         </div>
     </div>
 </template>
 
 <script>
-import AdminInputListForm from './AdminInputListForm.vue'
-import EmptyInputListForm from './EmptyInputListForm.vue'
+import InputListWithLabels from '../generic/InputListWithLabels.vue'
+import InputListForm from '../generic/InputListForm.vue'
+
+const EMPTY_LIST = ['', '', '', '']
 
 export default {
     name: 'AdminMedia',
@@ -50,12 +52,16 @@ export default {
                 photo: 'Photo URL',
                 thumb: 'Thumbnail URL',
                 caption: 'Caption'
-            }
+            },
+            floorplans: [...EMPTY_LIST],
+            photos360: [...EMPTY_LIST],
+            tours: [...EMPTY_LIST],
+            videos: [...EMPTY_LIST],
         }
     },
     components: { 
-        AdminInputListForm,
-        EmptyInputListForm
+        InputListWithLabels,
+        InputListForm
     },
     mounted() {
         this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined

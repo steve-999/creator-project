@@ -1,6 +1,6 @@
 <template>
     <div class="admin-energy-performance-container">
-        <AdminInputListForm 
+        <InputListWithLabels 
             heading="Energy Performance" 
             :input_object="energy_performance_object"
             :display_labels_object="display_labels_obj" />
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import AdminInputListForm from './AdminInputListForm.vue'
+import InputListWithLabels from '../generic/InputListWithLabels.vue'
 
 export default {
     name: 'AdminEnergyPerformance',
     props: ['propertiesData', 'property_id'],
     components: {
-        AdminInputListForm
+        InputListWithLabels
     },
     data() {
         return {

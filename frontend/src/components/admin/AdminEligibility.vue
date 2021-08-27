@@ -1,9 +1,10 @@
 <template>
     <div class="eligibility-container">
-        <AdminEditBooleanList 
+        <InputBooleanList 
             :heading="heading" 
             :input_object="output_object"
             :display_labels_object="display_labels_object" 
+            @handleCheckboxChange="handleFormChange"
         />
     </div>
 
@@ -11,13 +12,13 @@
 </template>
 
 <script>
-import AdminEditBooleanList from './AdminEditBooleanList.vue'
+import InputBooleanList from '../generic/InputBooleanList.vue'
 
 export default {
     name: 'AdminEligibility',
     props: ['propertiesData', 'property_id'],
     components: {
-        AdminEditBooleanList
+        InputBooleanList
     },
     data() {
         return {
@@ -53,6 +54,11 @@ export default {
         },
         output_object() {
             return this.property ? this.property.eligibility : undefined
+        }
+    },
+    methods: {
+        handleFormChange(name, value) {
+            console.log(`AdminEligibility > handleFormChange > name ${name}, value ${value}`)
         }
     }
 }

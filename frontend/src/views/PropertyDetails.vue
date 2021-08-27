@@ -10,8 +10,7 @@
 
 <script>
 import axios from 'axios';
-//const BASE_API_URL = 'http://localhost:5000/api'
-const BASE_API_URL = 'https://creator-project-e5c73.ondigitalocean.app/api'
+import { BASE_API_URL } from '../environment/environment.js'
 import TopOfPageContainer from '../components/TopOfPageContainer.vue'
 import AmenitiesContainer from '../components/AmenitiesContainer.vue'
 import PropertyInfo from '../components/PropertyInfo.vue'

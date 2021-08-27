@@ -10,13 +10,13 @@
                     <h2 class="admin-contracts__h2--top">Contract {{ idx }}</h2>
                     <div class="admin-contracts-main-info-and-utilities-container">
                         <div class="admin-contracts-main-contracts-info-container">
-                            <AdminInputListForm 
+                            <InputListWithLabels 
                                 :input_object="create_main_contract_info_object(idx-1)" 
                                 :display_labels_object="main_contract_display_keys" />
                         </div>
 
                         <div class="admin-contracts-utilities-container">
-                            <AdminEditBooleanList
+                            <InputBooleanList
                                 :input_object="create_utilities_info_object(idx-1)" 
                                 :display_labels_object="utilities_display_keys" />    
                         </div>    
@@ -29,7 +29,7 @@
                             class="admin-contracts-room-prices__li"
                         >
                             <div class="admin-contracts-room-prices-container">
-                                <AdminInputListForm 
+                                <InputListWithLabels 
                                     :input_object="create_room_prices_info_object(idx-1, idx_2-1)" 
                                     :display_labels_object="room_prices_display_keys" />
                             </div>
@@ -42,16 +42,16 @@
 </template>
 
 <script>
-import AdminInputListForm from './AdminInputListForm.vue'
-import AdminEditBooleanList from './AdminEditBooleanList.vue'
+import InputListWithLabels from '../generic/InputListWithLabels.vue'
+import InputBooleanList from '../generic/InputBooleanList.vue'
 // 'heading', 'input_object', 'display_labels_object'
 
 export default {
     name: 'AdminContracts',
     props: ['propertiesData', 'property_id'],
     components: {
-        AdminInputListForm,
-        AdminEditBooleanList
+        InputListWithLabels,
+        InputBooleanList
     },
     data() {
         return {

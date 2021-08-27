@@ -10,6 +10,7 @@
                     :name="key" 
                     :checked="input_object[key]"
                     class="admin-edit-boolean-list__input" 
+                    @change="handleCheckboxChange($event)"
                 >
                 <label class="admin-edit-boolean-list__label">{{ display_labels_object[key] }}</label>
             </div>
@@ -20,11 +21,19 @@
 
 <script>
 export default {
-    name: 'AdminEditBooleanList',
+    name: 'InputBooleanList',
     props: ['heading', 'input_object', 'display_labels_object'],
     computed: {
         keys_list() {
             return this.display_labels_object ? Object.keys(this.display_labels_object) : undefined
+        }
+    },
+    methods: {
+        handleCheckboxChange(e) {
+            //console.log('InputBooleanList > handlechange > e', e)
+            //console.log('InputBooleanList > handleCheckboxChange > e.target.name', e.target.name)
+            //console.log('InputBooleanList > handleCheckboxChange > e.target.checked', e.target.checked)
+            this.$emit('handleCheckboxChange', e.target.name, e.target.checked)
         }
     }
 }

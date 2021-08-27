@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DisplayListForObject from './DisplayListForObject.vue'
+import DisplayListForObject from './generic/DisplayListForObject.vue'
 
 export default {
     name: 'EnergyPerformance',

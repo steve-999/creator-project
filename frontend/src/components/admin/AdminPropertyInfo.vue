@@ -3,7 +3,7 @@
       
             <div class="components-container">
                 <div class="top-component-container">
-                    <AdminInputListForm 
+                    <InputListWithLabels 
                         heading="Details"
                         :input_object="top_list_input_object"
                         :display_labels_object="top_list_display_labels_obj" 
@@ -20,7 +20,7 @@
                     </form>
                 </div>
                 <div class="address-component-container">
-                    <AdminInputListForm 
+                    <InputListWithLabels 
                         heading="Address" 
                         :input_object="address_input_object"
                         :display_labels_object="address_display_labels_obj" 
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import AdminInputListForm from './AdminInputListForm.vue'
+import InputListWithLabels from '../generic/InputListWithLabels.vue'
 import AdminFacilities from './AdminFacilities.vue'
 import AdminEligibility from './AdminEligibility.vue'
 import AdminEnergyPerformance from './AdminEnergyPerformance.vue'
@@ -52,7 +52,7 @@ export default {
     name: 'AdminPropertyInfo',
     props: ['propertiesData', 'property_id'],
     components: {
-        AdminInputListForm,
+        InputListWithLabels,
         AdminFacilities,
         AdminEligibility,
         AdminEnergyPerformance

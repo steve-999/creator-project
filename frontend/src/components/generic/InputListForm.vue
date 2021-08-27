@@ -1,9 +1,9 @@
 <template>
     <div class="empty-input-list-form-container">
         <form>
-            <ul class="empty-input-list-form__ul" v-if="num_elements">
-                <li v-for="idx in num_elements" :key="idx-1" class="empty-input-list-form__li">
-                    <input class="empty-input-list-form__input" type="text" :name="idx-1" value="">
+            <ul class="empty-input-list-form__ul" v-if="input_list">
+                <li v-for="(item, idx) in input_list" :key="idx-1" class="empty-input-list-form__li">
+                    <input class="empty-input-list-form__input" type="text" :name="idx-1" :value="item">
                 </li>
             </ul>
         </form>
@@ -12,8 +12,13 @@
 
 <script>
 export default {
-    name: 'EmptyInputListForm',
-    props: ['num_elements']
+    name: 'InputListForm',
+    props: ['input_list'],
+    computed: {
+        num_elements() {
+            return this.input_list ? this.input_list.length : undefined
+        }
+    }
 }
 </script>
 

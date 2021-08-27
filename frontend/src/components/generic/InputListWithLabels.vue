@@ -1,19 +1,19 @@
 <template>
-    <div class="admin-input-list-form-container" v-if="input_object">
-        <h3 class="admin-input-list-form__h3" v-if="heading">{{ heading }}</h3>
+    <div class="admin-input-list-with-labels-container" v-if="input_object">
+        <h3 class="admin-input-list-with-labels__h3" v-if="heading">{{ heading }}</h3>
         <form @submit.prevent="handleSubmit">
-            <div v-for="key in keys_list" :key="key" class="admin-input-list-form__row">
-                <label class="admin-input-list-form__label">{{ display_labels_object[key] }}</label>
-                <input class="admin-input-list-form__input" type="text" :name="key" :value="input_object[key]">
+            <div v-for="key in keys_list" :key="key" class="admin-input-list-with-labels__row">
+                <label class="admin-input-list-with-labels__label">{{ display_labels_object[key] }}</label>
+                <input class="admin-input-list-with-labels__input" type="text" :name="key" :value="input_object[key]">
             </div>
-            <!-- <button type="submit" class="admin-input-list-form__submit-button">Update</button> -->
+            <!-- <button type="submit" class="admin-input-list-with-labels__submit-button">Update</button> -->
         </form>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'AdminInputListForm',
+    name: 'InputListWithLabels',
     props: ['heading', 'input_object', 'display_labels_object'],
     methods: {
         handleSubmit(e) {
@@ -34,7 +34,7 @@ export default {
     padding: 20px;
 }
 
-.admin-input-list-form__h3 {
+.admin-input-list-with-labels__h3 {
     font-size: 1.2em;
     font-weight: 600;
     text-align: left;
@@ -42,8 +42,8 @@ export default {
     margin: 5px 0;
 }
 
-.admin-input-list-form__label,
-.admin-input-list-form__input {
+.admin-input-list-with-labels__label,
+.admin-input-list-with-labels__input {
     display: inline-block;
     padding: 5px;
     margin: 2px auto;
@@ -54,17 +54,17 @@ export default {
     height: 2em;
 }
 
-.admin-input-list-form__label {
+.admin-input-list-with-labels__label {
     width: 50%;
 }
 
-.admin-input-list-form__input {
+.admin-input-list-with-labels__input {
     border: 1px solid #ccc;
     border-radius: 8px;
     width: 50%;
 }
 
-.admin-input-list-form__input:focus {
+.admin-input-list-with-labels__input:focus {
     outline: none;
     border: none;
     box-shadow: var(--orangey-red-color) 0px 0px 2px 2px;

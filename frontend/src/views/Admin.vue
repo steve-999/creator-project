@@ -34,8 +34,9 @@
 
 <script>
 import axios from 'axios';
+import { BASE_API_URL } from '../environment/environment.js'
 //const BASE_API_URL = 'http://localhost:5000/api'
-const BASE_API_URL = 'https://creator-project-e5c73.ondigitalocean.app/api'
+//const BASE_API_URL = 'https://creator-project-e5c73.ondigitalocean.app/api'
 import SelectPropertyModal from '../components/admin/SelectPropertyModal.vue'
 import { 
     create_address_string, 

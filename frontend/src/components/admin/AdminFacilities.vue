@@ -2,21 +2,25 @@
     <div class="facilities-page-container">
         <h3 class="facilities-form__h3">Facilities</h3> 
         <div class="facilities-form-container">
-            <form @submit.prevent="handleSubmit">
+            <InputListForm :input_list="facilities_list" />
+            <!-- <form @submit.prevent="handleSubmit">
                 <div v-for="(val, idx) in facilities_list" :key="idx" class="facilities-form__row">
                     <input class="facilities-form__input" type="text" :name="val" :value="val">
                 </div>
-                <!-- <button type="submit" class="facilities-form__submit-button">Update</button> -->
-            </form>
+            </form> -->
         </div>
     </div>
 </template>
 
 <script>
+import InputListForm from '../generic/InputListForm.vue'
 
 export default {
     name: 'AdminFacilities',
     props: ['propertiesData', 'property_id'],
+    components: {
+        InputListForm
+    },
     data() {
         return {
             properties: undefined

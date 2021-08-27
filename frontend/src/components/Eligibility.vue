@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DisplayBooleanList from './DisplayBooleanList.vue'
+import DisplayBooleanList from './generic/DisplayBooleanList.vue'
 
 export default {
     name: 'Eligibility',
