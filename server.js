@@ -75,5 +75,8 @@ app.patch('/api/properties/:property_id', async (req, res) => {
     }
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/frontend/ui/build/index.html'));
+});
 
 app.listen(PORT, () => console.log(`serving from port ${PORT}`));
