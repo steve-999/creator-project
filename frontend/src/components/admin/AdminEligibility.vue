@@ -1,10 +1,11 @@
 <template>
     <div class="eligibility-container">
         <InputBooleanList 
+            indices="AdminEligibility"
             :heading="heading" 
             :input_object="output_object"
             :display_labels_object="display_labels_object" 
-            @handleCheckboxChange="handleFormChange"
+            @handleCheckboxChange="handleCheckboxChange"
         />
     </div>
 
@@ -13,6 +14,7 @@
 
 <script>
 import InputBooleanList from '../generic/InputBooleanList.vue'
+import { update_mongodb } from '../../shared/shared_code.js'
 
 export default {
     name: 'AdminEligibility',
@@ -39,12 +41,12 @@ export default {
     },
     mounted() {
         if (this.propertiesData) {
-            this.properties = JSON.parse(this.propertiesData)
+            this.properties = this.propertiesData
         }
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+            this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },
     computed: {
@@ -57,9 +59,10 @@ export default {
         }
     },
     methods: {
-        handleFormChange(name, value) {
-            console.log(`AdminEligibility > handleFormChange > name ${name}, value ${value}`)
-        }
+        handleCheckboxChange(name, value, indices) {
+            const update_key = `eligibility.${name}`
+            update_mongodb(this.property_id, update_key, value)
+        },
     }
 }
 </script>

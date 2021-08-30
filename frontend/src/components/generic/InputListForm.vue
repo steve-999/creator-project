@@ -2,8 +2,14 @@
     <div class="empty-input-list-form-container">
         <form>
             <ul class="empty-input-list-form__ul" v-if="input_list">
-                <li v-for="(item, idx) in input_list" :key="idx-1" class="empty-input-list-form__li">
-                    <input class="empty-input-list-form__input" type="text" :name="idx-1" :value="item">
+                <li v-for="(item, idx) in input_list" :key="idx" class="empty-input-list-form__li">
+                    <input  
+                        class="empty-input-list-form__input" 
+                        type="text" 
+                        :name="idx" 
+                        :value="item"
+                        @input="handleInput($event)"
+                    />
                 </li>
             </ul>
         </form>
@@ -13,10 +19,15 @@
 <script>
 export default {
     name: 'InputListForm',
-    props: ['input_list'],
+    props: ['input_list', 'indices'],
     computed: {
         num_elements() {
             return this.input_list ? this.input_list.length : undefined
+        }
+    },
+    methods: {
+        handleInput(e) {
+            this.$emit('handleInput', Number(e.target.name), e.target.value, this.indices)
         }
     }
 }
@@ -32,7 +43,7 @@ export default {
 
 .empty-input-list-form__input {
     display: inline-block;
-    padding: 5px;
+    padding: 5px 8px;
     margin: 2px auto;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.8em;

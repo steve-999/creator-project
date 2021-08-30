@@ -32,7 +32,7 @@ export default {
     },
     computed: {
         property() {
-            return this.propertyData ? JSON.parse(this.propertyData) : undefined
+            return this.propertyData ? this.propertyData : undefined
         },
         num_rooms() {
             return get_num_rooms(this.property)

@@ -1,3 +1,5 @@
+import {BASE_API_URL} from '../environment/environment.js'
+import axios from 'axios';
 
 export function create_address_string(propertyObj) {
     try {
@@ -104,6 +106,38 @@ export const get_min_total_monthly_price = propertyObj => get_min_total_amount(p
 export const get_min_total_deposit = propertyObj => get_min_total_amount(propertyObj, get_contract_total_deposit)
 
 
+export const update_mongodb = (property_id, update_key, update_val) => {
+    const url = `${BASE_API_URL}/properties/${property_id}`
+    const body = {
+        update_key,
+        update_val
+    }
+    axios.patch(url, body)
+        .then(resp => console.log(resp.data))
+        .catch(err => console.log(err.message))
+}
 
+export const DEBOUNCE_MS = 2000
 
+export function debounce(fn, ms=300) { 
+    let timer
+    return () => { 
+        clearTimeout(timer)
+        timer = setTimeout(() => fn.apply(this, arguments), ms)
+    }
+}
 
+// export function debounce(func, wait, immediate) {
+// 	var timeout;
+// 	return function() {
+// 		var context = this, args = arguments;
+// 		var later = function() {
+// 			timeout = null;
+// 			if (!immediate) func.apply(context, args);
+// 		};
+// 		var callNow = immediate && !timeout;
+// 		clearTimeout(timeout);
+// 		timeout = setTimeout(later, wait);
+// 		if (callNow) func.apply(context, args);
+// 	};
+// };

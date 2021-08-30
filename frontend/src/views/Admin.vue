@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="admin-edit-container">
-                <router-view></router-view>
+                <router-view :propertiesData="properties" :property_id="selected_property_id" ></router-view>
             </div>
         </div>
     </div>
@@ -94,8 +94,9 @@ export default {
         handleSelectPropertyClick(property_id) {
             this.selected_property_id = property_id
             this.show_modal = false
-            this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
-                                                                     property_id: this.selected_property_id } })
+            // this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
+            //                                                          property_id: this.selected_property_id } })
+            this.$router.push({ path: '/admin/property_info' })
             this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
             this.$refs['AdminPropertyInfo'].classList.add('active_tab')
         },

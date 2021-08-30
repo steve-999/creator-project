@@ -2,18 +2,17 @@
     <div class="facilities-page-container">
         <h3 class="facilities-form__h3">Facilities</h3> 
         <div class="facilities-form-container">
-            <InputListForm :input_list="facilities_list" />
-            <!-- <form @submit.prevent="handleSubmit">
-                <div v-for="(val, idx) in facilities_list" :key="idx" class="facilities-form__row">
-                    <input class="facilities-form__input" type="text" :name="val" :value="val">
-                </div>
-            </form> -->
+            <InputListForm 
+                :input_list="facilities_list" 
+                @handleInput="handleInputListChange" />
         </div>
     </div>
 </template>
 
 <script>
 import InputListForm from '../generic/InputListForm.vue'
+import { update_mongodb } from '../../shared/shared_code.js'
+//import { _, debounce } from 'lodash'
 
 export default {
     name: 'AdminFacilities',
@@ -28,12 +27,12 @@ export default {
     },
     mounted() {
         if (this.propertiesData) {
-            this.properties = JSON.parse(this.propertiesData)
+            this.properties = this.propertiesData
         }
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+            this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },
     computed: {
@@ -43,6 +42,12 @@ export default {
         },
         facilities_list() {
             return this.property ? this.property.facilities : undefined
+        }
+    },
+    methods: {
+        handleInputListChange(idx, value, indices) {
+            const update_key = `facilities.${idx}`
+            update_mongodb(this.property_id, update_key, value)
         }
     }
 }

@@ -3,50 +3,62 @@
         <div class="admin-room-details-list-container">
             <ul class="admin-room-details__ul">
                 <li 
-                    v-for="room in room_details"
-                    :key="room.room_id"
+                    v-for="(room, room_idx) in room_details"
+                    :key="room_idx"
                     class="admin-room-details__li"
                 >
-                    <form @submit.prevent="handleSubmit">
+                    <form>
                         <label  class="admin-room-details__label">Room name</label>
                         <input  class="admin-room-details__input-text" 
                                 type="text" 
+                                :room_idx="room_idx"
                                 name="room_name" 
                                 :value="room.room_name"
+                                @input="handleInputChange($event, room_idx)"
                         />
                         <label  class="admin-room-details__label">Room ID</label>
                         <input  class="admin-room-details__input-text" 
                                 type="text" 
+                                :room_idx="room_idx"
                                 name="room_id" 
                                 :value="room.room_id"
+                                @input="handleInputChange($event, room_idx)"
                         />                      
                         <label  class="admin-room-details__label">Floor</label>
                         <input  class="admin-room-details__input-text" 
                                 type="text" 
+                                :room_idx="room_idx"
                                 name="floor" 
                                 :value="room.floor"
+                                @input="handleInputChange($event, room_idx)"
                         />
                         <label  class="admin-room-details__label">Floor space</label>
                         <input  class="admin-room-details__input-text" 
                                 type="text" 
+                                :room_idx="room_idx"
                                 name="floor_space" 
                                 :value="room.floor_space"
+                                @input="handleInputChange($event, room_idx)"
                         />  
                         <label  class="admin-room-details__label">Ensuite</label>
                         <input  class="admin-room-details__input-checkbox"
                                 type="checkbox" 
+                                :room_idx="room_idx"
                                 id="ensuite" 
                                 value="ensuite" 
                                 name="ensuite" 
                                 :checked="room.ensuite"
+                                @change="handleCheckboxChange($event, room_idx)"
                         />                        
                         <label  class="admin-room-details__label">Disabled access</label>
                         <input  class="admin-room-details__input-checkbox"
                                 type="checkbox" 
+                                :room_idx="room_idx"
                                 id="disabled_access" 
                                 value="disabled_access" 
                                 name="disabled_access" 
                                 :checked="room.disabled_access"
+                                @change="handleCheckboxChange($event, room_idx)"
                         />
                     </form>
                 </li>
@@ -58,6 +70,8 @@
 
 
 <script>
+import { update_mongodb } from '../../shared/shared_code.js'
+
 export default {
     name: 'AdminRoomDetails',
     props: ['propertiesData', 'property_id'],
@@ -67,11 +81,11 @@ export default {
         }
     },
     mounted() {
-        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+        this.properties = this.propertiesData ? this.propertiesData : undefined
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+            this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },
     computed: {
@@ -81,6 +95,18 @@ export default {
         },
         room_details() {
             return this.property ? this.property.room_details : undefined
+        }
+    },
+    methods: {
+        handleInputChange(e, room_idx) {
+            const update_key = `room_details.${room_idx}.${e.target.name}`
+            const value = e.target.value
+            update_mongodb(this.property_id, update_key, value)  
+        },
+        handleCheckboxChange(e, room_idx) {
+            const update_key = `room_details.${room_idx}.${e.target.name}`
+            const value = e.target.checked
+            update_mongodb(this.property_id, update_key, value)  
         }
     }
 }

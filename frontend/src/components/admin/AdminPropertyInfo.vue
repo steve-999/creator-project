@@ -3,10 +3,11 @@
       
             <div class="components-container">
                 <div class="top-component-container">
-                    <InputListWithLabels 
+                    <InputListWithLabels
                         heading="Details"
                         :input_object="top_list_input_object"
-                        :display_labels_object="top_list_display_labels_obj" 
+                        :display_labels_object="top_list_display_labels_obj"
+                        @handleInput="handleInput__TopList" 
                     />   
                 </div>   
                 <div class="description-container" v-if="description">
@@ -15,7 +16,9 @@
                         <textarea 
                             name="description" 
                             :value="description"
-                            class="description__textarea">
+                            class="description__textarea"
+                            @input="handleDescriptionChange($event)"
+                            >
                         </textarea>
                     </form>
                 </div>
@@ -24,6 +27,7 @@
                         heading="Address" 
                         :input_object="address_input_object"
                         :display_labels_object="address_display_labels_obj" 
+                        @handleInput="handleInput__Address"
                     />
                 </div>
                 <AdminFacilities
@@ -47,6 +51,7 @@ import InputListWithLabels from '../generic/InputListWithLabels.vue'
 import AdminFacilities from './AdminFacilities.vue'
 import AdminEligibility from './AdminEligibility.vue'
 import AdminEnergyPerformance from './AdminEnergyPerformance.vue'
+import { update_mongodb } from '../../shared/shared_code.js'
 
 export default {
     name: 'AdminPropertyInfo',
@@ -85,11 +90,11 @@ export default {
         }
     },
     mounted() {
-        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+        this.properties = this.propertiesData ? this.propertiesData : undefined
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+            this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },
     computed: {
@@ -113,6 +118,21 @@ export default {
         },
         description() {
             return this.property ? this.property.description : undefined
+        }
+    },
+    methods: {
+        handleInput__TopList(name, value, indices) {
+            const update_key = name
+            update_mongodb(this.property_id, update_key, value)
+        },
+        handleInput__Address(name, value, indices) {
+            const update_key = `address.${name}`
+            update_mongodb(this.property_id, update_key, value)            
+        },
+        handleDescriptionChange(e) {
+            const update_key = 'description'
+            const value = e.target.value
+            update_mongodb(this.property_id, update_key, value)  
         }
     }
 }

@@ -3,12 +3,14 @@
         <InputListWithLabels 
             heading="Energy Performance" 
             :input_object="energy_performance_object"
-            :display_labels_object="display_labels_obj" />
+            :display_labels_object="display_labels_obj"
+            @handleInput="handleInputListWithLabelsChange" />
     </div>
 </template>
 
 <script>
 import InputListWithLabels from '../generic/InputListWithLabels.vue'
+import { update_mongodb } from '../../shared/shared_code.js'
 
 export default {
     name: 'AdminEnergyPerformance',
@@ -30,11 +32,11 @@ export default {
         }
     },
     mounted() {
-        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+        this.properties = this.propertiesData ? this.propertiesData : undefined
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+            this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },
     computed: {
@@ -44,6 +46,12 @@ export default {
         },
         energy_performance_object() {
             return this.property ? this.property.energy_performance : undefined
+        }
+    },
+    methods: {
+        handleInputListWithLabelsChange(name, value, indices) {
+            const update_key = `energy_performance.${name}`
+            update_mongodb(this.property_id, update_key, value)
         }
     }
 }

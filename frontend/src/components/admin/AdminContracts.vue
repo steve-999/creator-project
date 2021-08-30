@@ -3,35 +3,42 @@
         <div class="admin-contracts-container">
             <ul class="admin-contracts__ul">
                 <li 
-                    v-for="idx in num_contracts" 
-                    :key="idx-1"
+                    v-for="idx1 in num_contracts" 
+                    :key="idx1-1"
                     class="admin-contracts__li"
                 >
-                    <h2 class="admin-contracts__h2--top">Contract {{ idx }}</h2>
+                    <h2 class="admin-contracts__h2--top">Contract {{ idx1 }}</h2>
                     <div class="admin-contracts-main-info-and-utilities-container">
                         <div class="admin-contracts-main-contracts-info-container">
                             <InputListWithLabels 
-                                :input_object="create_main_contract_info_object(idx-1)" 
-                                :display_labels_object="main_contract_display_keys" />
+                                :indices="`contract_idx=${idx1-1}`"
+                                :input_object="create_main_contract_info_object(idx1-1)" 
+                                :display_labels_object="main_contract_display_keys"
+                                @handleInput="handleInputChange__MainInfo"
+                                />
                         </div>
 
                         <div class="admin-contracts-utilities-container">
                             <InputBooleanList
-                                :input_object="create_utilities_info_object(idx-1)" 
-                                :display_labels_object="utilities_display_keys" />    
+                                :indices="`contract_idx=${idx1-1}`"
+                                :input_object="create_utilities_info_object(idx1-1)" 
+                                :display_labels_object="utilities_display_keys"
+                                @handleCheckboxChange="handleCheckboxChange__Utilities" />    
                         </div>    
                     </div>      
                     <h3 class="admin-contracts__h3">Room prices</h3>          
                     <ul class="admin-contracts-room-prices__ul">
                         <li 
-                            v-for="idx_2 in property.contracts[idx-1].prices.length" 
-                            :key="idx_2-1"
+                            v-for="idx2 in property.contracts[idx1-1].prices.length" 
+                            :key="idx2-1"
                             class="admin-contracts-room-prices__li"
                         >
                             <div class="admin-contracts-room-prices-container">
                                 <InputListWithLabels 
-                                    :input_object="create_room_prices_info_object(idx-1, idx_2-1)" 
-                                    :display_labels_object="room_prices_display_keys" />
+                                    :indices="`contract_idx=${idx1-1} | room_idx=${idx2-1}`"
+                                    :input_object="create_room_prices_info_object(idx1-1, idx2-1)" 
+                                    :display_labels_object="room_prices_display_keys"
+                                    @handleInput="handleInputChange__RoomPrices" />
                             </div>
                         </li>
                     </ul>
@@ -44,7 +51,7 @@
 <script>
 import InputListWithLabels from '../generic/InputListWithLabels.vue'
 import InputBooleanList from '../generic/InputBooleanList.vue'
-// 'heading', 'input_object', 'display_labels_object'
+import { update_mongodb } from '../../shared/shared_code.js'
 
 export default {
     name: 'AdminContracts',
@@ -82,11 +89,11 @@ export default {
         }
     },
     mounted() {
-        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+        this.properties = this.propertiesData ? this.propertiesData : undefined
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
+            this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },
     computed: {
@@ -118,6 +125,23 @@ export default {
         },
         create_room_prices_info_object(contract_idx, room_idx) {
             return this.property.contracts[contract_idx].prices[room_idx]
+        },
+        handleCheckboxChange__Utilities(name, value, indices) {
+            const contract_idx = indices.split('=')[1]
+            const update_key = `contracts.${contract_idx}.utilities.${name}` 
+            update_mongodb(this.property_id, update_key, value)
+        },
+        handleInputChange__MainInfo(name, value, indices) {
+            const contract_idx = indices.split('=')[1]
+            const update_key = `contracts.${contract_idx}.${name}`
+            update_mongodb(this.property_id, update_key, value)
+        },
+        handleInputChange__RoomPrices(name, value, indices) {
+            const temp = indices.split(' | ')
+            const contract_idx = temp[0].split('=')[1]
+            const room_idx = temp[1].split('=')[1]
+            const update_key = `contracts.${contract_idx}.prices.${room_idx}.${name}`
+            update_mongodb(this.property_id, update_key, value)
         }
     }
 }
