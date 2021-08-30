@@ -108,8 +108,9 @@ export default {
                 alert('Please select a property to edit')
                 return
             }
-            this.$router.push({ name: route_name, params: { propertiesData: JSON.stringify(this.properties),
-                                                            property_id: this.selected_property_id } })
+            this.$router.push({ path: `/admin/${route_name}` })
+            // this.$router.push({ name: route_name, params: { propertiesData: JSON.stringify(this.properties),
+            //                                                 property_id: this.selected_property_id } })
             this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
             this.$refs[route_name].classList.add('active_tab')
         },
