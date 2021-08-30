@@ -21,13 +21,13 @@ const routes = [
         component: Admin,
         children: [
             {
-                path: 'contract',
+                path: 'contracts',
                 name: 'AdminContracts',
                 component: AdminContracts,
                 props: true
             },
             {
-                path: 'photos',
+                path: 'media',
                 name: 'AdminMedia',
                 component: AdminMedia,
                 props: true

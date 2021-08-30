@@ -53,10 +53,10 @@ export default {
             show_modal: true, 
             selected_property_id: undefined,
             tabs: [
-                { text: 'Property Info',    route_name: 'AdminPropertyInfo'},
-                { text: 'Room Details',     route_name: 'AdminRoomDetails'},
-                { text: 'Contracts',        route_name: 'AdminContracts'},
-                { text: 'Media',            route_name: 'AdminMedia' },
+                { text: 'Property Info',    route_name: 'property_info'},
+                { text: 'Room Details',     route_name: 'room_details'},
+                { text: 'Contracts',        route_name: 'contracts'},
+                { text: 'Media',            route_name: 'media' },
             ]
         }
     },
