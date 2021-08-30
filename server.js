@@ -64,7 +64,6 @@ app.get('/api/properties/:property_id', async (req, res) => {
 app.patch('/api/properties/:property_id', async (req, res) => {
     const property_id = req.params.property_id;
     const update_obj = {};
-    //if (req.body.update_key.includes()
     update_obj[req.body.update_key] = req.body.update_val;
     try {
         const resp = await Property.updateOne({'property_id': property_id}, { $set: update_obj});

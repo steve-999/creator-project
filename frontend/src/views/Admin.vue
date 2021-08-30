@@ -33,10 +33,6 @@
 </template>
 
 <script>
-// import axios from 'axios';
-// import { BASE_API_URL } from '../environment/environment.js'
-//const BASE_API_URL = 'http://localhost:5000/api'
-//const BASE_API_URL = 'https://creator-project-e5c73.ondigitalocean.app/api'
 import SelectPropertyModal from '../components/admin/SelectPropertyModal.vue'
 import { 
     create_address_string, 
@@ -50,7 +46,6 @@ export default {
     props: ['properties'],
     data() {
         return {
-            //properties: undefined,
             show_modal: true, 
             selected_property_id: undefined,
             tabs: [
@@ -64,16 +59,6 @@ export default {
     components: {
         SelectPropertyModal
     },
-    // async created() {
-    //     const url = `${BASE_API_URL}/properties`;
-    //     try {
-    //         const resp = await axios.get(url);
-    //         this.properties = resp.data
-    //     }
-    //     catch(err) {
-    //         console.log(err.message);
-    //     }        
-    // },
     computed: {
         selected_property_string() {
             if (!this.selected_property_id)
@@ -90,13 +75,10 @@ export default {
     },
     methods: {
         handleSelectPropertyClick(property_id) {
-            console.log('Admin > handleSelectPropertyClick > property_id', property_id)
             this.selected_property_id = property_id
             this.show_modal = false
             this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
                                                                      property_id: this.selected_property_id } })
-            //this.$router.push({ path: '/admin/property_info' })
-            console.log('handleSelectPropertyClick > this.$refs', this.$refs)
             this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
             if (this.$refs['AdminPropertyInfo']) {
                 this.$refs['AdminPropertyInfo'].classList.add('active_tab')
@@ -110,7 +92,6 @@ export default {
                 alert('Please select a property to edit')
                 return
             }
-            //this.$router.push({ path: `/admin/${route_name}` })
             this.$router.push({ name: route_name, params: { propertiesData: JSON.stringify(this.properties),
                                                             property_id: this.selected_property_id } })
             this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))

@@ -29,12 +29,6 @@ export default {
         property() {
             if (!this.propertyData || !('contracts' in this.propertyData) || this.propertyData.contracts.length === 0)
                 return undefined
-            // this.$router.replace({ name: 'Contract', 
-            //             params: { 
-            //                 propertyData: JSON.stringify(this.property), 
-            //                 contract_idx: this.contract_idx
-            //             } 
-            //         })
             return this.propertyData ? this.propertyData : undefined
         },
         start_end_dates() {
@@ -59,12 +53,6 @@ export default {
     methods: {
         handleChildDateTabClicked(new_contract_idx) {
             this.contract_idx = new_contract_idx
-            // this.$router.push({ name: 'Contract', 
-            //                     params: { 
-            //                         propertyData: JSON.stringify(this.property), 
-            //                         contract_idx: JSON.stringify(this.contract_idx) 
-            //                     } 
-            //                 })
         },
     }
 }

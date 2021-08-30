@@ -31,9 +31,7 @@ export default {
             const resp = await axios.get(url);
             this.properties = resp.data
         }
-        catch(err) {
-            console.log(err.message);
-        }        
+        catch(err) { console.log(err.message) }        
     },
 }
 </script>

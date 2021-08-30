@@ -12,7 +12,6 @@
 <script>
 import InputListForm from '../generic/InputListForm.vue'
 import { update_mongodb } from '../../shared/shared_code.js'
-//import { _, debounce } from 'lodash'
 
 export default {
     name: 'AdminFacilities',

@@ -44,9 +44,7 @@ export default {
             const resp = await axios.get(url)
             this.property = resp.data
         }
-        catch(err) {
-            console.log(err.message);
-        }
+        catch(err) { console.log(err.message) }
     },
     computed: {
         num_contracts() {
