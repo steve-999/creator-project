@@ -1,12 +1,15 @@
 <template>
     <div class="app-container">
         <Header/>
-        <router-view />
+        <router-view :properties="properties" />
         <Footer/>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { BASE_API_URL } from './environment/environment.js'
+
 import Header from './views/Header.vue'
 import Footer from './components/Footer.vue'
 
@@ -15,7 +18,23 @@ export default {
     components: { 
         Header,
         Footer 
-    },  
+    }, 
+    
+    data() {
+        return {  
+            properties: null  
+        }
+    },
+    async created() {
+        const url = `${BASE_API_URL}/properties`;
+        try {
+            const resp = await axios.get(url);
+            this.properties = resp.data
+        }
+        catch(err) {
+            console.log(err.message);
+        }        
+    },
 }
 </script>
 

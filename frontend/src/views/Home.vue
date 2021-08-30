@@ -7,32 +7,33 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { BASE_API_URL } from '../environment/environment.js'
+// import axios from 'axios';
+// import { BASE_API_URL } from '../environment/environment.js'
 //const BASE_API_URL = 'http://localhost:5000/api'
 //const BASE_API_URL = 'https://creator-project-e5c73.ondigitalocean.app/api'
 import PropertySummary from '../components/PropertySummary.vue'
 
 export default {
     name: 'Home',
+    props: ['properties'],
     components: {
         PropertySummary
     },
-    data() {
-        return {  
-            properties: null  
-        }
-    },
-    async created() {
-        const url = `${BASE_API_URL}/properties`;
-        try {
-            const resp = await axios.get(url);
-            this.properties = resp.data
-        }
-        catch(err) {
-            console.log(err.message);
-        }        
-    },
+    // data() {
+    //     return {  
+    //         properties: null  
+    //     }
+    // },
+    // async created() {
+    //     const url = `${BASE_API_URL}/properties`;
+    //     try {
+    //         const resp = await axios.get(url);
+    //         this.properties = resp.data
+    //     }
+    //     catch(err) {
+    //         console.log(err.message);
+    //     }        
+    // },
 }
 </script>
 

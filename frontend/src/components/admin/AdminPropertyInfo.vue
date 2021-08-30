@@ -90,10 +90,12 @@ export default {
         }
     },
     mounted() {
+        console.log('AdminPropertyInfo > mounted > this.propertiesData', this.propertiesData, this.property_id)
         this.properties = this.propertiesData ? this.propertiesData : undefined
     },
     updated() {
         if (!this.properties && this.propertiesData) {
+            console.log('AdminPropertyInfo > updated > this.propertiesData', this.propertiesData, this.property_id)
             this.properties = this.propertiesData ? this.propertiesData : undefined
         }
     },

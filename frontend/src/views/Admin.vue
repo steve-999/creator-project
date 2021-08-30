@@ -14,15 +14,15 @@
         <div class="admin-content-container">
             <div class="tabs-container">
                 <ul class="tabs__ul">
-                    <div 
+                    <li 
                         v-for="idx in tabs.length" 
                         :key="idx" 
                         class="tabs__li" 
-                        @click="handleClickTab(tabs[idx-1].route_name)"
-                        :ref="tabs[idx-1].route_name"
+                        @click="handleClickTab(tabs[idx-1].route_path)"
+                        :ref="tabs[idx-1].route_path"
                     >
-                        <li class="tab">{{ tabs[idx-1].text }}</li>
-                    </div>
+                        <span class="tab">{{ tabs[idx-1].text }}</span>
+                    </li>
                 </ul>
             </div>
             <div class="admin-edit-container">
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { BASE_API_URL } from '../environment/environment.js'
+// import axios from 'axios';
+// import { BASE_API_URL } from '../environment/environment.js'
 //const BASE_API_URL = 'http://localhost:5000/api'
 //const BASE_API_URL = 'https://creator-project-e5c73.ondigitalocean.app/api'
 import SelectPropertyModal from '../components/admin/SelectPropertyModal.vue'
@@ -47,36 +47,34 @@ import {
 
 export default {
     name: 'Admin',
+    props: ['properties'],
     data() {
         return {
-            properties: undefined,
+            //properties: undefined,
             show_modal: true, 
             selected_property_id: undefined,
             tabs: [
-                { text: 'Property Info',    route_name: 'property_info'},
-                { text: 'Room Details',     route_name: 'room_details'},
-                { text: 'Contracts',        route_name: 'contracts'},
-                { text: 'Media',            route_name: 'media' },
+                { text: 'Property Info',    route_path: 'property_info'},
+                { text: 'Room Details',     route_path: 'room_details'},
+                { text: 'Contracts',        route_path: 'contracts'},
+                { text: 'Media',            route_path: 'media' },
             ]
         }
     },
     components: {
         SelectPropertyModal
     },
-    async created() {
-        const url = `${BASE_API_URL}/properties`;
-        try {
-            const resp = await axios.get(url);
-            this.properties = resp.data
-        }
-        catch(err) {
-            console.log(err.message);
-        }        
-    },
+    // async created() {
+    //     const url = `${BASE_API_URL}/properties`;
+    //     try {
+    //         const resp = await axios.get(url);
+    //         this.properties = resp.data
+    //     }
+    //     catch(err) {
+    //         console.log(err.message);
+    //     }        
+    // },
     computed: {
-        property() {
-            return this.propertyData ? this.propertyData : undefined
-        },
         selected_property_string() {
             if (!this.selected_property_id)
                 return undefined
@@ -97,22 +95,22 @@ export default {
             // this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
             //                                                          property_id: this.selected_property_id } })
             this.$router.push({ path: '/admin/property_info' })
-            this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
-            this.$refs['AdminPropertyInfo'].classList.add('active_tab')
+            this.tabs.forEach(tab => this.$refs[tab.route_path].classList.remove('active_tab'))
+            this.$refs['property_info'].classList.add('active_tab')
         },
         handleClickOpenModal() {
             this.show_modal = true
         },
-        handleClickTab(route_name) {
+        handleClickTab(route_path) {
             if (!this.selected_property_id) {
                 alert('Please select a property to edit')
                 return
             }
-            this.$router.push({ path: `/admin/${route_name}` })
-            // this.$router.push({ name: route_name, params: { propertiesData: JSON.stringify(this.properties),
+            this.$router.push({ path: `/admin/${route_path}` })
+            // this.$router.push({ name: route_path, params: { propertiesData: JSON.stringify(this.properties),
             //                                                 property_id: this.selected_property_id } })
-            this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
-            this.$refs[route_name].classList.add('active_tab')
+            this.tabs.forEach(tab => this.$refs[tab.route_path].classList.remove('active_tab'))
+            this.$refs[route_path].classList.add('active_tab')
         },
         closeModal() {
             this.show_modal = false
