@@ -90,6 +90,7 @@ export default {
     },
     methods: {
         handleSelectPropertyClick(property_id) {
+            console.log('Admin > handleSelectPropertyClick > property_id', property_id)
             this.selected_property_id = property_id
             this.show_modal = false
             // this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
