@@ -89,11 +89,11 @@ export default {
         }
     },
     mounted() {
-        this.properties = this.propertiesData ? this.propertiesData : undefined
+        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? this.propertiesData : undefined
+            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
         }
     },
     computed: {

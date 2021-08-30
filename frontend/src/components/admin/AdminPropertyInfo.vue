@@ -91,23 +91,23 @@ export default {
         }
     },
     mounted() {
-        console.log('AdminPropertyInfo > mounted > this.propertiesData', this.propertiesData)
-        console.log('AdminPropertyInfo > mounted > this.property_id', this.property_id)
-        this.properties = this.propertiesData ? this.propertiesData : undefined
+        //console.log('AdminPropertyInfo > mounted > this.propertiesData', this.propertiesData)
+        //console.log('AdminPropertyInfo > mounted > this.property_id', this.property_id)
+        this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
         this.property_id_in = this.property_id
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            console.log('AdminPropertyInfo > updated > this.propertiesData', this.propertiesData)
-            console.log('AdminPropertyInfo > updated > this.property_id', this.property_id)
-            this.properties = this.propertiesData ? this.propertiesData : undefined
+            //console.log('AdminPropertyInfo > updated > this.propertiesData', this.propertiesData)
+            //console.log('AdminPropertyInfo > updated > this.property_id', this.property_id)
+            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
             this.property_id_in = this.property_id
         }
     },
     computed: {
         property() {
             try {
-                console.log('AdminPropertyInfo > computed property', this.properties.find(property => property.property_id === this.property_id))
+                //console.log('AdminPropertyInfo > computed property', this.properties.find(property => property.property_id === this.property_id))
                 return this.properties.find(property => property.property_id === this.property_id)
             }
             catch(e) {

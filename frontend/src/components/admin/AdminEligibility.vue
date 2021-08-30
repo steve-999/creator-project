@@ -41,12 +41,12 @@ export default {
     },
     mounted() {
         if (this.propertiesData) {
-            this.properties = this.propertiesData
+            this.properties = JSON.parse(this.propertiesData)
         }
     },
     updated() {
         if (!this.properties && this.propertiesData) {
-            this.properties = this.propertiesData ? this.propertiesData : undefined
+            this.properties = this.propertiesData ? JSON.parse(this.propertiesData) : undefined
         }
     },
     computed: {

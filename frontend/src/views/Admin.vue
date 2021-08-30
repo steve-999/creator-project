@@ -18,15 +18,15 @@
                         v-for="idx in tabs.length" 
                         :key="idx" 
                         class="tabs__li" 
-                        @click="handleClickTab(tabs[idx-1].route_path)"
-                        :ref="tabs[idx-1].route_path"
+                        @click="handleClickTab(tabs[idx-1].route_name)"
+                        :ref="tabs[idx-1].route_name"
                     >
                         <span class="tab">{{ tabs[idx-1].text }}</span>
                     </li>
                 </ul>
             </div>
             <div class="admin-edit-container">
-                <router-view :propertiesData="properties" :property_id="selected_property_id" ></router-view>
+                <router-view></router-view>
             </div>
         </div>
     </div>
@@ -54,10 +54,10 @@ export default {
             show_modal: true, 
             selected_property_id: undefined,
             tabs: [
-                { text: 'Property Info',    route_path: 'property_info'},
-                { text: 'Room Details',     route_path: 'room_details'},
-                { text: 'Contracts',        route_path: 'contracts'},
-                { text: 'Media',            route_path: 'media' },
+                { text: 'Property Info',    route_name: 'AdminPropertyInfo'},
+                { text: 'Room Details',     route_name: 'AdminRoomDetails'},
+                { text: 'Contracts',        route_name: 'AdminContracts'},
+                { text: 'Media',            route_name: 'AdminMedia' },
             ]
         }
     },
@@ -93,25 +93,28 @@ export default {
             console.log('Admin > handleSelectPropertyClick > property_id', property_id)
             this.selected_property_id = property_id
             this.show_modal = false
-            // this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
-            //                                                          property_id: this.selected_property_id } })
-            this.$router.push({ path: '/admin/property_info' })
-            this.tabs.forEach(tab => this.$refs[tab.route_path].classList.remove('active_tab'))
-            this.$refs['property_info'].classList.add('active_tab')
+            this.$router.push({ name: 'AdminPropertyInfo', params: { propertiesData: JSON.stringify(this.properties),
+                                                                     property_id: this.selected_property_id } })
+            //this.$router.push({ path: '/admin/property_info' })
+            console.log('handleSelectPropertyClick > this.$refs', this.$refs)
+            this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
+            if (this.$refs['AdminPropertyInfo']) {
+                this.$refs['AdminPropertyInfo'].classList.add('active_tab')
+            }
         },
         handleClickOpenModal() {
             this.show_modal = true
         },
-        handleClickTab(route_path) {
+        handleClickTab(route_name) {
             if (!this.selected_property_id) {
                 alert('Please select a property to edit')
                 return
             }
-            this.$router.push({ path: `/admin/${route_path}` })
-            // this.$router.push({ name: route_path, params: { propertiesData: JSON.stringify(this.properties),
-            //                                                 property_id: this.selected_property_id } })
-            this.tabs.forEach(tab => this.$refs[tab.route_path].classList.remove('active_tab'))
-            this.$refs[route_path].classList.add('active_tab')
+            //this.$router.push({ path: `/admin/${route_name}` })
+            this.$router.push({ name: route_name, params: { propertiesData: JSON.stringify(this.properties),
+                                                            property_id: this.selected_property_id } })
+            this.tabs.forEach(tab => this.$refs[tab.route_name].classList.remove('active_tab'))
+            this.$refs[route_name].classList.add('active_tab')
         },
         closeModal() {
             this.show_modal = false
